@@ -1,11 +1,11 @@
 {
-  "name": "coffee-finder",
+  "name": "coffee-scraper",
   "type": "module",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "scrape": "pnpm -F coffee-scraper scrape"
+    "scrape": "bun run ./src/scrape.ts"
   },
   "keywords": [],
   "author": "",
@@ -15,8 +15,5 @@
     "puppeteer": "^22.10.0",
     "uuid": "^10.0.0"
   },
-  "devDependencies": {
-    "prettier": "^3.3.2",
-    "typescript": "^5.4.5"
-  }
+  "devDependencies": {}
 }
