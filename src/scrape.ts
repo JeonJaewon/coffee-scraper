@@ -1,9 +1,9 @@
-import fs from 'fs'
+import { doc, setDoc } from 'firebase/firestore'
 import puppeteer, { ElementHandle } from 'puppeteer'
 import { SMART_STORE_URL } from './constants'
-import { Vendor, beanBrothers } from './vendors'
-
-const DATA_DIR_PATH = './data'
+import { db } from './firebase'
+import { Vendor, beanBrothers, hCoffeeRoasters, realBean } from './vendors'
+import { v5 as uuidv5 } from 'uuid'
 
 export const scrape = async ({ title: vendorTitle, url, selectors }: Vendor) => {
   const browser = await puppeteer.launch()
@@ -34,14 +34,28 @@ export const scrape = async ({ title: vendorTitle, url, selectors }: Vendor) => 
   }
 
   const coffeeItems = await Promise.all(rawItems.map(extractItemDetails))
-  fs.writeFile(`${DATA_DIR_PATH}/${vendorTitle}.json`, JSON.stringify(coffeeItems), (err) => {
-    if (err) {
-      console.error(err)
+
+  for (const item of coffeeItems) {
+    try {
+      const id = uuidv5(item.url, uuidv5.URL)
+      await setDoc(doc(db, 'coffeeItems', id), item)
+    } catch (error) {
+      console.error(error)
       return
     }
-  })
+  }
 
   await browser.close()
+  console.log(`Scraping Done for ${vendorTitle}, ${coffeeItems.length} items scraped`)
 }
 
-scrape(beanBrothers)
+const vendors = [beanBrothers, hCoffeeRoasters, realBean]
+Promise.all(vendors.map((vendor) => scrape(vendor)))
+  .then(() => {
+    console.log('All scraping done')
+    process.exit(0)
+  })
+  .catch((err) => {
+    console.error(err)
+    process.exit(1)
+  })
