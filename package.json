@@ -5,16 +5,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "scrape": "pnpm -F coffee-scraper scrape"
+    "scrape": "pnpm -F coffee-scraper scrape",
+    "dev:front": "pnpm -F coffee-finder-frontend dev"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "firebase": "^10.12.2",
-    "puppeteer": "^22.10.0",
-    "uuid": "^10.0.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "prettier": "^3.3.2",
     "typescript": "^5.4.5"
