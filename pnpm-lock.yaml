@@ -15,19 +15,7 @@ importers:
         specifier: ^5.4.5
         version: 5.4.5
 
-  coffee-scraper:
-    dependencies:
-      firebase:
-        specifier: ^10.12.2
-        version: 10.12.2
-      puppeteer:
-        specifier: ^22.10.0
-        version: 22.10.0(typescript@5.4.5)
-      uuid:
-        specifier: ^10.0.0
-        version: 10.0.0
-
-  frontend:
+  coffee-finder-frontend:
     dependencies:
       next:
         specifier: 14.2.4
@@ -66,6 +54,18 @@ importers:
       typescript:
         specifier: ^5
         version: 5.4.5
+
+  coffee-scraper:
+    dependencies:
+      firebase:
+        specifier: ^10.12.2
+        version: 10.12.2
+      puppeteer:
+        specifier: ^22.10.0
+        version: 22.10.0(typescript@5.4.5)
+      uuid:
+        specifier: ^10.0.0
+        version: 10.0.0
 
 packages:
 
