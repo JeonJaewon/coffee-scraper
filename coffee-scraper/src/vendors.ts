@@ -9,6 +9,7 @@ type ScrapeSelectors = {
   listSelector: string
   priceSelector: string
   titleSelector: string
+  thumbnailSrcSelector: string
 }
 
 export type Vendor = {
@@ -25,6 +26,7 @@ export const realBean: Vendor = {
     listSelector: buildSelector(['wOWfwtMC_3', '_3cLKMqI7mI']),
     priceSelector: buildSelector('_2DywKu0J_8'),
     titleSelector: buildSelector('_26YxgX-Nu5'),
+    thumbnailSrcSelector: buildSelector('_25CKxIKjAk'),
   },
 }
 
@@ -36,6 +38,7 @@ export const beanBrothers: Vendor = {
     listSelector: buildSelector(['wOWfwtMC_3', '_3cLKMqI7mI']),
     priceSelector: buildSelector('_2DywKu0J_8'),
     titleSelector: buildSelector('_26YxgX-Nu5'),
+    thumbnailSrcSelector: buildSelector('_25CKxIKjAk'),
   },
 }
 
@@ -47,5 +50,6 @@ export const hCoffeeRoasters: Vendor = {
     listSelector: buildSelector(['wOWfwtMC_3', 'FR2H3hWxUo']),
     priceSelector: buildSelector('_2DywKu0J_8'),
     titleSelector: buildSelector('_26YxgX-Nu5'),
+    thumbnailSrcSelector: buildSelector('_25CKxIKjAk'),
   },
 }
