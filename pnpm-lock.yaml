@@ -17,6 +17,12 @@ importers:
 
   coffee-finder-frontend:
     dependencies:
+      coffee-scraper:
+        specifier: workspace:coffee-scraper@*
+        version: link:../coffee-scraper
+      firebase:
+        specifier: ^10.12.2
+        version: 10.12.2
       next:
         specifier: 14.2.4
         version: 14.2.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
