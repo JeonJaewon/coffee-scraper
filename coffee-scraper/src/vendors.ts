@@ -13,13 +13,13 @@ type ScrapeSelectors = {
 }
 
 export type Vendor = {
-  title: string
+  vendorName: string
   url: string
   selectors: ScrapeSelectors
 }
 
 export const realBean: Vendor = {
-  title: '리얼빈',
+  vendorName: '리얼빈',
   url: buildVendorUrl('/realbean/category/cca9273ba86d4707adafaf15872a957a?cp=1'),
   selectors: {
     cardShapeSelector: buildCardShapeSelector('SQUARE'),
@@ -31,7 +31,7 @@ export const realBean: Vendor = {
 }
 
 export const beanBrothers: Vendor = {
-  title: '빈브라더스',
+  vendorName: '빈브라더스',
   url: buildVendorUrl('/beanbrothers/category/bde432298242411098a91d5474cf7eb4?cp=1'),
   selectors: {
     cardShapeSelector: buildCardShapeSelector('SQUARE'),
@@ -43,7 +43,7 @@ export const beanBrothers: Vendor = {
 }
 
 export const hCoffeeRoasters: Vendor = {
-  title: '에이치커피로스터스',
+  vendorName: '에이치커피로스터스',
   url: buildVendorUrl('/hcoffeeroasters/category/9868ab1333974cfe9a012075dc7f1c03?cp=1'),
   selectors: {
     cardShapeSelector: buildCardShapeSelector('V_RECT'),

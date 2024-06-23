@@ -3,6 +3,11 @@ export type CoffeeItem = {
   url: string
   thumbnailSrc: string
   title: string
-  vendor: string
+  vendorName: string
+}
+
+export type VendorSnapshot = {
+  vendorName: string
   createdAt: number
+  coffeeItems: CoffeeItem[]
 }
