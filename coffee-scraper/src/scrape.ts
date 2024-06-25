@@ -2,12 +2,12 @@ import { doc, setDoc } from 'firebase/firestore'
 import puppeteer, { ElementHandle } from 'puppeteer'
 import { SMART_STORE_URL } from './constants'
 import { db } from './firebase'
-import { CoffeeItem, VendorSnapshot } from './types'
+import { CoffeeItem, CreatedAtTimestamp, VendorSnapshot } from './types'
 import { Vendor, beanBrothers, hCoffeeRoasters, realBean } from './vendors'
 
 const createdAt = new Date().getTime()
 
-export const scrape = async ({ vendorName, url, selectors }: Vendor) => {
+const scrape = async ({ vendorName, url, selectors }: Vendor) => {
   const browser = await puppeteer.launch()
   const page = await browser.newPage()
   await page.goto(url)
@@ -35,7 +35,7 @@ export const scrape = async ({ vendorName, url, selectors }: Vendor) => {
       url: `${SMART_STORE_URL}${urlPath}`,
     }
   }
-  const id = `${vendorName}-${createdAt}`
+  const id = `${createdAt}-${vendorName}`
   const coffeeItems = await Promise.all(rawItems.map(extractItemDetails))
 
   const makeVendorSnapshot = (): VendorSnapshot => {
@@ -52,14 +52,23 @@ export const scrape = async ({ vendorName, url, selectors }: Vendor) => {
   console.log(`Scraping Done for ${vendorName}, ${coffeeItems.length} items scraped`)
 }
 
-const vendors = [hCoffeeRoasters, realBean, beanBrothers]
-Promise.all(vendors.map((vendor) => scrape(vendor)))
-  .then(() => {
-    console.log('All scraping done')
+const addCreatedAtTimestamp = async (createdAt: number) => {
+  try {
+    const createdAtTimestamp: CreatedAtTimestamp = { createdAt }
+    await setDoc(doc(db, 'createdAtTimestamps', createdAt.toString()), createdAtTimestamp)
+    console.log('Added createdAt timestamp', createdAt, createdAt.toLocaleString())
+  } catch (error) {
+    console.error(error)
+  }
+}
 
-    process.exit(0)
-  })
-  .catch((err) => {
-    console.error(err)
-    process.exit(1)
-  })
+const vendors = [hCoffeeRoasters, realBean, beanBrothers]
+try {
+  await Promise.all(vendors.map((vendor) => scrape(vendor)))
+  await addCreatedAtTimestamp(createdAt)
+  console.log('All scraping done')
+  process.exit(0)
+} catch (error) {
+  console.error(error)
+  process.exit(1)
+}

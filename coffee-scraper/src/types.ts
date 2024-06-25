@@ -11,3 +11,7 @@ export type VendorSnapshot = {
   createdAt: number
   coffeeItems: CoffeeItem[]
 }
+
+export type CreatedAtTimestamp = {
+  createdAt: number
+}
