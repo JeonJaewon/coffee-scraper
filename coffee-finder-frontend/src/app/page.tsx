@@ -1,9 +1,8 @@
 import { CoffeeGrid } from './CoffeeGrid'
-import styles from './page.module.css'
 
 export default function Home() {
   return (
-    <main className={styles.main}>
+    <main className="flex flex-col justify-between items-center min-h-dvh bg-stone-200">
       <CoffeeGrid />
     </main>
   )
