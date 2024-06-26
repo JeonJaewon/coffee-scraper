@@ -1,10 +1,11 @@
+'use client'
+
+import { useCoffeeItemsQuery } from '@/queries/useCoffeeItems'
 import { formatToKRW } from '@/utils'
 import { CoffeeItem } from 'coffee-scraper'
 
-export const CoffeeGrid = async () => {
-  const getCoffeeItemsResponse = await fetch(`${process.env.HOST_NAME}/api/getCoffeeItems`)
-  const coffeeItems: CoffeeItem[] = await getCoffeeItemsResponse.json()
-
+export const CoffeeGrid = () => {
+  const { data: coffeeItems } = useCoffeeItemsQuery()
   return (
     <div className="w-full max-w-7xl p-2 grid gap-8 grid-cols-[repeat(auto-fill,minmax(18rem,1fr))]">
       {coffeeItems?.map((item) => <CoffeeGridItem key={item.url} {...item} />)}
