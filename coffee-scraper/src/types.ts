@@ -11,5 +11,7 @@ export type CreatedAtTimestamp = {
 }
 
 export type VendorSnapshots = {
-  [vendorName: string]: CoffeeItem[]
+  items: {
+    [vendorName: string]: CoffeeItem[]
+  }
 } & CreatedAtTimestamp

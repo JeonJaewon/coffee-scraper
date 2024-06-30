@@ -42,11 +42,11 @@ const scrapeCoffeeItems = async ({ vendorName, url, selectors }: Vendor): Promis
 }
 
 const writeScrapedVendors = async (vendors: Vendor[]) => {
-  const vendorSnapshots = { createdAt } as VendorSnapshots
+  const vendorSnapshots = { createdAt, items: {} } as VendorSnapshots
   await Promise.all(
     vendors.map(async (vendor) => {
       const coffeeItems = await scrapeCoffeeItems(vendor)
-      vendorSnapshots[vendor.vendorName] = coffeeItems
+      vendorSnapshots.items[vendor.vendorName] = coffeeItems
     })
   )
 
