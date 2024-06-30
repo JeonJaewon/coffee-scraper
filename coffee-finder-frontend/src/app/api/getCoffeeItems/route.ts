@@ -13,7 +13,9 @@ export async function GET() {
   // TODO replace 'as' with type converter
   const coffeeItems = snapShot.docs
     .map((doc) => doc.data() as VendorSnapshots)
-    .map((vendorSnapshot) => vendorSnapshot.coffeeItems)
+    .map((vendorSnapshot) => Object.values(vendorSnapshot.items))
     .flat()
+    .flat()
+
   return Response.json(coffeeItems)
 }

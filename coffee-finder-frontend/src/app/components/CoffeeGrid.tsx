@@ -14,12 +14,12 @@ export const CoffeeGrid = () => {
 }
 
 const CoffeeGridItem = ({ thumbnailSrc, title, price, url, vendorName }: CoffeeItem) => (
-  <a href={url} target="_blank" className="rounded shadow-2xl flex flex-col cursor-pointer overflow-hidden">
-    <img src={thumbnailSrc} className="w-full" loading="lazy" />
-    <div className="flex flex-col p-4 bg-gray-100 rounded-b-lg flex-1 h-2/5">
-      <h2 className="text-lg font-bold text-gray-800 mb-2 overflow-hidden text-ellipsis line-clamp-2">{title}</h2>
+  <a href={url} target="_blank" className="rounded shadow-lg flex flex-col cursor-pointer overflow-hidden">
+    <img src={thumbnailSrc} className="w-full h-full object-cover bg-white" loading="lazy" />
+    <div className="flex flex-col p-4 bg-gray-100 rounded-b-lg h-2/5">
+      <h2 className="text-base font-bold text-gray-800 mb-2 overflow-hidden text-ellipsis line-clamp-2">{title}</h2>
       <div className="mt-auto">
-        <p className="text-lg text-gray-700 mb-1 font-semibold">{formatToKRW(price)}</p>
+        <p className="text-md text-gray-800 mb-1 font-semibold">{formatToKRW(price)}</p>
         <p className="text-sm text-slate-700 font-semibold text-end">{vendorName}</p>
       </div>
     </div>

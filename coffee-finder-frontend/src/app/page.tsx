@@ -1,9 +1,13 @@
-import { CoffeeGrid } from './CoffeeGrid'
+import { CoffeeGrid } from './components/CoffeeGrid'
+import Header from './components/Header'
 
 export default function Home() {
   return (
-    <main className="flex flex-col justify-between items-center min-h-dvh bg-stone-200">
-      <CoffeeGrid />
-    </main>
+    <div className="bg-stone-200">
+      <Header />
+      <main className="flex flex-col justify-between items-center min-h-dvh mt-10 ">
+        <CoffeeGrid />
+      </main>
+    </div>
   )
 }
