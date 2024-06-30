@@ -1,5 +1,5 @@
 import { db } from 'coffee-scraper'
-import { VendorSnapshot } from 'coffee-scraper/src/types'
+import { VendorSnapshots } from 'coffee-scraper/src/types'
 import { collection, getDocs, limit, orderBy, query, where } from 'firebase/firestore'
 
 export async function GET() {
@@ -12,7 +12,7 @@ export async function GET() {
 
   // TODO replace 'as' with type converter
   const coffeeItems = snapShot.docs
-    .map((doc) => doc.data() as VendorSnapshot)
+    .map((doc) => doc.data() as VendorSnapshots)
     .map((vendorSnapshot) => vendorSnapshot.coffeeItems)
     .flat()
   return Response.json(coffeeItems)

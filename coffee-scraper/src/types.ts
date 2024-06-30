@@ -6,12 +6,10 @@ export type CoffeeItem = {
   vendorName: string
 }
 
-export type VendorSnapshot = {
-  vendorName: string
-  createdAt: number
-  coffeeItems: CoffeeItem[]
-}
-
 export type CreatedAtTimestamp = {
   createdAt: number
 }
+
+export type VendorSnapshots = {
+  [vendorName: string]: CoffeeItem[]
+} & CreatedAtTimestamp

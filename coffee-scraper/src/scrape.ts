@@ -2,12 +2,12 @@ import { doc, setDoc } from 'firebase/firestore'
 import puppeteer, { ElementHandle } from 'puppeteer'
 import { SMART_STORE_URL } from './constants'
 import { db } from './firebase'
-import { CoffeeItem, CreatedAtTimestamp, VendorSnapshot } from './types'
+import { CoffeeItem, CreatedAtTimestamp, VendorSnapshots } from './types'
 import { Vendor, beanBrothers, hCoffeeRoasters, realBean } from './vendors'
 
 const createdAt = new Date().getTime()
 
-const scrape = async ({ vendorName, url, selectors }: Vendor) => {
+const scrapeCoffeeItems = async ({ vendorName, url, selectors }: Vendor): Promise<CoffeeItem[]> => {
   const browser = await puppeteer.launch()
   const page = await browser.newPage()
   await page.goto(url)
@@ -35,37 +35,44 @@ const scrape = async ({ vendorName, url, selectors }: Vendor) => {
       url: `${SMART_STORE_URL}${urlPath}`,
     }
   }
-  const id = `${createdAt}-${vendorName}`
   const coffeeItems = await Promise.all(rawItems.map(extractItemDetails))
+  console.log(`Scraping Done for ${vendorName}, ${coffeeItems.length} items scraped`)
 
-  const makeVendorSnapshot = (): VendorSnapshot => {
-    return { vendorName, coffeeItems, createdAt }
-  }
+  return coffeeItems
+}
+
+const writeScrapedVendors = async (vendors: Vendor[]) => {
+  const vendorSnapshots = { createdAt } as VendorSnapshots
+  await Promise.all(
+    vendors.map(async (vendor) => {
+      const coffeeItems = await scrapeCoffeeItems(vendor)
+      vendorSnapshots[vendor.vendorName] = coffeeItems
+    })
+  )
+
   try {
-    await setDoc(doc(db, 'vendorSnapshots', id), makeVendorSnapshot())
+    const id = new Date(createdAt).toISOString()
+    await setDoc(doc(db, 'vendorSnapshots', id), vendorSnapshots)
   } catch (error) {
     console.error(error)
     return
   }
-
-  await browser.close()
-  console.log(`Scraping Done for ${vendorName}, ${coffeeItems.length} items scraped`)
 }
 
-const addCreatedAtTimestamp = async (createdAt: number) => {
+const writeCreatedAtTimestamp = async (createdAt: number) => {
   try {
+    const id = new Date(createdAt).toISOString()
     const createdAtTimestamp: CreatedAtTimestamp = { createdAt }
-    await setDoc(doc(db, 'createdAtTimestamps', createdAt.toString()), createdAtTimestamp)
-    console.log('Added createdAt timestamp', createdAt, createdAt.toLocaleString())
+    await setDoc(doc(db, 'createdAtTimestamps', id), createdAtTimestamp)
+    console.log('Added createdAt timestamp', createdAt)
   } catch (error) {
     console.error(error)
   }
 }
 
-const vendors = [hCoffeeRoasters, realBean, beanBrothers]
 try {
-  await Promise.all(vendors.map((vendor) => scrape(vendor)))
-  await addCreatedAtTimestamp(createdAt)
+  const vendors = [hCoffeeRoasters, realBean, beanBrothers]
+  await Promise.all([writeCreatedAtTimestamp(createdAt), writeScrapedVendors(vendors)])
   console.log('All scraping done')
   process.exit(0)
 } catch (error) {
