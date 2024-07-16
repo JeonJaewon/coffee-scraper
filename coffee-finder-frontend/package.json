@@ -4,13 +4,14 @@
   "private": true,
   "scripts": {
     "dev": "NODE_OPTIONS='--inspect' next dev",
-    "build": "next build",
+    "build": "env-cmd -f ./.env.production next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.48.0",
     "coffee-scraper": "workspace:coffee-scraper@*",
+    "env-cmd": "^10.1.0",
     "firebase": "^10.12.2",
     "next": "14.2.4",
     "react": "^18",
@@ -26,5 +27,6 @@
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.4",
     "typescript": "^5"
-  }
+  },
+  "packageManager": "pnpm@9.0.6"
 }
