@@ -1,5 +1,5 @@
-
 FROM node:18-alpine AS base
+RUN corepack enable pnpm
 
 # Install dependencies only when needed
 FROM base AS deps
@@ -11,17 +11,16 @@ WORKDIR /app
 COPY ./coffee-finder-frontend/package.json ./coffee-finder-frontend/package.json
 COPY ./coffee-scraper ./coffee-scraper
 COPY ./package.json ./
+COPY ./pnpm-lock.yaml ./pnpm-lock.yaml
 
-# COPY ./pnpm-lock.yaml ./
-
-RUN corepack enable pnpm && pnpm i;
+RUN pnpm i --frozen-lockfile;
 
 # Rebuild the source code only when needed
 FROM base AS builder
 WORKDIR /app
-COPY --from=deps /app/node_modules ./coffee-finder-frontend/node_modules
+COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-RUN corepack enable pnpm && pnpm -F coffee-finder-frontend run build;
+RUN pnpm -F coffee-finder-frontend build;
 
 
 FROM base AS runner
@@ -34,16 +33,22 @@ ENV NODE_ENV production
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-COPY --from=builder /app/coffee-finder-frontend/public ./public
+COPY --from=builder /app/coffee-finder-frontend/public ./coffee-finder-frontend/public
 
-# Set the correct permission for prerender cache
-RUN mkdir .next
-RUN chown nextjs:nodejs .next
 
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
-COPY --from=builder --chown=nextjs:nodejs /app/coffee-finder-frontend/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/coffee-finder-frontend/.next/static ./.next/static
+COPY --from=builder --chown=nextjs:nodejs /app/pnpm-lock.yaml ./pnpm-lock.yaml
+COPY --from=builder --chown=nextjs:nodejs /app/node_modules  ./node_modules
+COPY --from=builder --chown=nextjs:nodejs /app/coffee-finder-frontend/node_modules  ./coffee-finder-frontend/node_modules
+COPY --from=builder --chown=nextjs:nodejs /app/coffee-finder-frontend/package.json  ./coffee-finder-frontend/package.json
+COPY --from=builder --chown=nextjs:nodejs /app/coffee-finder-frontend/next.config.mjs  ./coffee-finder-frontend/next.config.mjs
+COPY --from=builder --chown=nextjs:nodejs /app/coffee-finder-frontend/.next  ./coffee-finder-frontend/.next
+COPY --from=builder --chown=nextjs:nodejs /app/coffee-finder-frontend/.next/static ./coffee-finder-frontend/.next/static
+
+# Set the correct permission for prerender cache
+# RUN mkdir .next
+RUN chown nextjs:nodejs ./coffee-finder-frontend/.next
 
 USER nextjs
 
@@ -53,4 +58,5 @@ ENV PORT 3000
 
 # server.js is created by next build from the standalone output
 # https://nextjs.org/docs/pages/api-reference/next-config-js/output
-CMD HOSTNAME="0.0.0.0" node server.js
+# CMD HOSTNAME="0.0.0.0" node server.js
+CMD ["pnpm", "-F", "coffee-finder-frontend", "start"]
