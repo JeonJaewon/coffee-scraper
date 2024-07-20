@@ -3,12 +3,17 @@
 import { useCoffeeItemsQuery } from '@/queries/useCoffeeItems'
 import { formatToKRW } from '@/utils'
 import { CoffeeItem } from 'coffee-scraper'
+import { useFilterCoffeeItems } from './policy'
 
 export const CoffeeGrid = () => {
   const { data: coffeeItems } = useCoffeeItemsQuery()
+  const filteredCoffeeItems = useFilterCoffeeItems(coffeeItems)
+
   return (
     <div className="w-full max-w-7xl p-2 grid gap-8 grid-cols-[repeat(auto-fill,minmax(18rem,1fr))]">
-      {coffeeItems?.map((item) => <CoffeeGridItem key={item.url} {...item} />)}
+      {filteredCoffeeItems.map((item) => (
+        <CoffeeGridItem key={item.url} {...item} />
+      ))}
     </div>
   )
 }
