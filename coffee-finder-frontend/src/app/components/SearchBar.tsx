@@ -2,7 +2,7 @@
 
 import { useFilterStore } from '@/lib/store/filterStore'
 import { useDebounce } from '@/lib/utils/useDebounce'
-import { useEffect, useState } from 'react'
+import { FormEvent, useEffect, useState } from 'react'
 
 export const SearchBar = () => {
   const [inputValue, setInputValue] = useState('')
@@ -13,16 +13,21 @@ export const SearchBar = () => {
     debouncedSetSearchKeyword(inputValue)
   }, [inputValue, debouncedSetSearchKeyword])
 
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    setSearchKeyword(inputValue)
+  }
+
   return (
     <div className="max-w-56 mx-auto">
-      <form className="relative">
+      <form className="relative" onSubmit={onSubmit}>
         <input
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           placeholder="검색어를 입력해 주세요"
           className="block w-full mt-8 py-1.5 pl-3 pr-9 rounded-md border-slate-500 placeholder:text-sm"
         />
-        <button className="absolute top-0 bottom-0 right-2 my-auto">
+        <button type="submit" className="absolute top-0 bottom-0 right-2 my-auto">
           <svg
             fill="#000000"
             height="18px"
