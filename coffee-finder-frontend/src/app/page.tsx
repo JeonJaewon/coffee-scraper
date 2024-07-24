@@ -1,6 +1,8 @@
+import { Suspense } from 'react'
 import { CoffeeGrid } from './components/CoffeeGrid'
 import Header from './components/Header'
 import { SearchBar } from './components/SearchBar'
+import { Spinner } from './components/Spinner'
 
 export default function Home() {
   return (
@@ -8,7 +10,9 @@ export default function Home() {
       <Header />
       <SearchBar />
       <main className="flex flex-col justify-between items-center min-h-dvh mt-10 ">
-        <CoffeeGrid />
+        <Suspense fallback={<Spinner />}>
+          <CoffeeGrid />
+        </Suspense>
       </main>
     </div>
   )

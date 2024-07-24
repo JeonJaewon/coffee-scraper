@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import { ErrorBoundary } from 'react-error-boundary'
 import './globals.css'
 import { ReactQueryProvider } from './ReactQueryProvider'
 import { CustomErrorBoundary } from './components/ErrorBoundary'
