@@ -61,7 +61,6 @@
 html,
 body {
   max-width: 100vw;
-  overflow-x: hidden;
 }
 
 body {
@@ -85,4 +84,9 @@ a {
   border-right-color: transparent;
   border-bottom-color: currentColor;
   border-left-color: currentColor;
+}
+
+#header-title {
+  font-family: 'Railway';
+  border-bottom: 2px solid white;
 }

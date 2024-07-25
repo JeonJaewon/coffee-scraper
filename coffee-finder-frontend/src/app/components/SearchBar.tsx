@@ -7,7 +7,7 @@ import { FormEvent, useEffect, useState } from 'react'
 export const SearchBar = () => {
   const [inputValue, setInputValue] = useState('')
   const setSearchKeyword = useFilterStore((state) => state.setSearchKeyword)
-  const debouncedSetSearchKeyword = useDebounce(setSearchKeyword, 300)
+  const debouncedSetSearchKeyword = useDebounce(setSearchKeyword, 200)
 
   useEffect(() => {
     debouncedSetSearchKeyword(inputValue)
@@ -25,9 +25,9 @@ export const SearchBar = () => {
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           placeholder="검색어를 입력해 주세요"
-          className="block w-full mt-8 py-1.5 pl-3 pr-9 rounded-md border-slate-500 placeholder:text-sm"
+          className="block w-full py-1.5 pl-4 pr-10 rounded-md border-slate-500 placeholder:text-sm"
         />
-        <button type="submit" className="absolute top-0 bottom-0 right-2 my-auto">
+        <button type="submit" className="absolute h-full top-0 bottom-0 right-3 my-auto">
           <svg
             fill="#000000"
             height="18px"
