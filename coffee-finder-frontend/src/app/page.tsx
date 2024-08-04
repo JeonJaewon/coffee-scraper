@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <div className="bg-stone-200">
       <Header />
-      <main className="flex flex-col justify-between items-center min-h-dvh mt-10 ">
+      <main className="flex flex-col justify-between items-center min-h-dvh py-6">
         <Suspense fallback={<Spinner />}>
           <CoffeeGrid />
         </Suspense>

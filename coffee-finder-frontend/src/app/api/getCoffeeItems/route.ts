@@ -1,12 +1,18 @@
 import { db } from 'coffee-scraper'
-import { VendorSnapshots } from 'coffee-scraper/src/types'
+import { CoffeeItem, VendorSnapshots } from 'coffee-scraper/src/types'
 import { collection, getDocs, limit, orderBy, query, where } from 'firebase/firestore'
+import { NextResponse } from 'next/server'
+
+export type GetCoffeeItemsResponse = {
+  coffeeItems: CoffeeItem[]
+  createdAt: number
+}
 
 export async function GET() {
   try {
     const queryLatestTimestamp = query(collection(db, 'createdAtTimestamps'), orderBy('createdAt', 'desc'), limit(1))
     const latestTimestampDocs = await getDocs(queryLatestTimestamp)
-    const latestCreatedAt = latestTimestampDocs.docs[0].data().createdAt
+    const latestCreatedAt: number = latestTimestampDocs.docs[0].data().createdAt
 
     const queryLatestSnapshot = query(collection(db, 'vendorSnapshots'), where('createdAt', '==', latestCreatedAt))
     const snapShot = await getDocs(queryLatestSnapshot)
@@ -18,8 +24,8 @@ export async function GET() {
       .flat()
       .flat()
 
-    return Response.json(coffeeItems)
+    return NextResponse.json({ coffeeItems, createdAt: latestCreatedAt })
   } catch (error) {
-    return Response.error()
+    return NextResponse.error()
   }
 }

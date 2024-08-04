@@ -6,17 +6,25 @@ import { CoffeeItem } from 'coffee-scraper'
 import { useFilterCoffeeItems } from './policy'
 
 export const CoffeeGrid = () => {
-  const { data: coffeeItems } = useCoffeeItemsQuery()
+  const {
+    data: { coffeeItems, createdAt },
+  } = useCoffeeItemsQuery()
   const filteredCoffeeItems = useFilterCoffeeItems(coffeeItems)
 
   const isEmpty = filteredCoffeeItems.length === 0
 
+  if (isEmpty) {
+    return <p className="text-center text-lg text-gray-800">검색 결과가 없습니다.</p>
+  }
+
   return (
-    <div className="w-full max-w-7xl py-4 px-12 grid gap-8 grid-cols-[repeat(auto-fill,minmax(12rem,1fr))]">
-      {isEmpty && <p className="text-center text-lg text-gray-800">검색 결과가 없습니다.</p>}
-      {filteredCoffeeItems.map((item) => (
-        <CoffeeGridItem key={item.url} {...item} />
-      ))}
+    <div className="w-full max-w-7xl px-12">
+      <p className="text-right text-xs text-gray-500">최종 업데이트: {new Date(createdAt).toLocaleString()}</p>
+      <div className="py-8 grid gap-8 grid-cols-[repeat(auto-fill,minmax(12rem,1fr))]">
+        {filteredCoffeeItems.map((item) => (
+          <CoffeeGridItem key={item.url} {...item} />
+        ))}
+      </div>
     </div>
   )
 }
