@@ -1,8 +1,10 @@
+import './globals.css'
+import '@mantine/core/styles.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import './globals.css'
 import { ReactQueryProvider } from './ReactQueryProvider'
 import { CustomErrorBoundary } from './components/ErrorBoundary'
+import { ColorSchemeScript, MantineProvider } from '@mantine/core'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -25,10 +27,13 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
           rel="stylesheet"
         />
+        <ColorSchemeScript />
       </head>
       <body className={inter.className}>
         <CustomErrorBoundary>
-          <ReactQueryProvider>{children}</ReactQueryProvider>
+          <MantineProvider>
+            <ReactQueryProvider>{children}</ReactQueryProvider>
+          </MantineProvider>
         </CustomErrorBoundary>
       </body>
     </html>

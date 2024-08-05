@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@mantine/core": "^7.11.2",
+    "@mantine/hooks": "^7.11.2",
     "@tanstack/react-query": "^5.48.0",
     "coffee-scraper": "workspace:coffee-scraper@*",
     "env-cmd": "^10.1.0",
