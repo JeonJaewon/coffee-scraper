@@ -4,7 +4,7 @@ import { useCoffeeItemsQuery } from '@/queries/useCoffeeItems'
 import { formatToKRW } from '@/utils'
 import { CoffeeItem } from 'coffee-scraper'
 import { useFilterCoffeeItems } from './policy'
-import { FilterBox } from './FilterBox'
+import { FilterBox } from './Filter/FilterBox'
 
 export const CoffeeGrid = () => {
   const {
@@ -14,10 +14,6 @@ export const CoffeeGrid = () => {
 
   const isEmpty = filteredCoffeeItems.length === 0
 
-  if (isEmpty) {
-    return <p className="text-center text-lg text-gray-800">검색 결과가 없습니다.</p>
-  }
-
   return (
     <div className="w-full max-w-7xl px-12">
       <div className="flex justify-between items-center">
@@ -25,9 +21,11 @@ export const CoffeeGrid = () => {
         <FilterBox />
       </div>
       <div className="py-8 grid gap-8 grid-cols-[repeat(auto-fill,minmax(12rem,1fr))]">
-        {filteredCoffeeItems.map((item) => (
-          <CoffeeGridItem key={item.url} {...item} />
-        ))}
+        {isEmpty ? (
+          <p className="text-center text-lg text-gray-800">검색 결과가 없습니다.</p>
+        ) : (
+          filteredCoffeeItems.map((item) => <CoffeeGridItem key={item.url} {...item} />)
+        )}
       </div>
     </div>
   )
