@@ -7,17 +7,16 @@ export const SORT_ORDER_OPTIONS: Record<SortOrder, string> = {
 }
 
 export const ORIGIN_FILTERS = [
-  '전체',
   '과테말라',
-  '에티오피아',
-  '에콰도르',
-  '온두라스',
   '브라질',
-  '페루',
-  '파나마',
-  '콜롬비아',
+  '에콰도르',
+  '에티오피아',
+  '온두라스',
   '코스타리카',
+  '콜롬비아',
   '케냐',
+  '파나마',
+  '페루',
 ] as const
 
 export type SortOrder = 'latest' | 'priceAsc' | 'priceDesc'
@@ -26,8 +25,9 @@ export type OriginFilter = (typeof ORIGIN_FILTERS)[number]
 type FilterState = {
   searchKeyword: string
   setSearchKeyword: (keyword: string) => void
-  origin: OriginFilter
+  origin?: OriginFilter
   setOrigin: (origin: OriginFilter) => void
+  clearOrigin: () => void
   sortOrder: SortOrder
   setSortOrder: (order: SortOrder) => void
 }
@@ -35,8 +35,8 @@ type FilterState = {
 export const useFilterStore = create<FilterState>((set) => ({
   searchKeyword: '',
   setSearchKeyword: (keyword: string) => set({ searchKeyword: keyword }),
-  origin: '전체',
   setOrigin: (origin: OriginFilter) => set({ origin }),
+  clearOrigin: () => set({ origin: undefined }),
   sortOrder: 'latest',
   setSortOrder: (sortOrder: SortOrder) => set({ sortOrder }),
 }))

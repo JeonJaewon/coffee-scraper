@@ -12,7 +12,7 @@ export const useFilterCoffeeItems = (items?: CoffeeItem[]): CoffeeItem[] => {
       return item.title.includes(searchKeyword)
     })
     .filter((item) => {
-      if (origin === '전체') return true
+      if (origin === undefined) return true
       return item.title.includes(origin)
     })
     .sort((a, b) => {
