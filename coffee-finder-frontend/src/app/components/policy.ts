@@ -9,7 +9,7 @@ export const useFilterCoffeeItems = (items?: CoffeeItem[]): CoffeeItem[] => {
   return items
     .filter((item) => {
       if (searchKeyword === '') return true
-      return item.title.includes(searchKeyword)
+      return item.title.includes(searchKeyword) || item.vendorName.includes(searchKeyword)
     })
     .filter((item) => {
       if (origin === undefined) return true
