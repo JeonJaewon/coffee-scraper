@@ -19,13 +19,15 @@ export const CoffeeGrid = () => {
     <div className="w-full max-w-7xl px-12">
       <FilterBox />
       <StatusBox totalItems={filteredCoffeeItems.length} lastUpdatedAt={createdAt} />
-      <div className="mt-6 grid gap-8 grid-cols-[repeat(auto-fill,minmax(12rem,1fr))]">
-        {isEmpty ? (
-          <p className="text-center text-lg text-gray-800">검색 결과가 없습니다.</p>
-        ) : (
-          filteredCoffeeItems.map((item) => <CoffeeGridItem key={item.url} {...item} />)
-        )}
-      </div>
+      {isEmpty ? (
+        <p className="mt-12 text-center text-md text-gray-800">검색 결과가 없습니다.</p>
+      ) : (
+        <div className="mt-6 grid gap-8 grid-cols-[repeat(auto-fill,minmax(12rem,1fr))]">
+          {filteredCoffeeItems.map((item) => (
+            <CoffeeGridItem key={item.url} {...item} />
+          ))}
+        </div>
+      )}
     </div>
   )
 }
