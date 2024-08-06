@@ -7,7 +7,7 @@ export const OriginSelect = () => {
   return (
     <Select
       placeholder="재배지"
-      value={origin}
+      value={origin ?? null}
       onChange={(value) => setOrigin(value as OriginFilter)}
       onClear={clearOrigin}
       data={ORIGIN_FILTERS}

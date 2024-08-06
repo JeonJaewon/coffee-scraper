@@ -1,7 +1,6 @@
 import { Suspense } from 'react'
 import { CoffeeGrid } from './components/CoffeeGrid'
 import Header from './components/Header'
-import { SearchBar } from './components/SearchBar'
 import { Spinner } from './components/Spinner'
 
 export default function Home() {
