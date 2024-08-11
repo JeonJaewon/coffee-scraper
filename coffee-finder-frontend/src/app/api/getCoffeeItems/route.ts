@@ -23,6 +23,7 @@ export async function GET() {
       .map((vendorSnapshot) => Object.values(vendorSnapshot.items))
       .flat()
       .flat()
+      .sort((a, b) => (a.vendorName > b.vendorName ? 1 : -1))
 
     return NextResponse.json({ coffeeItems, createdAt: latestCreatedAt })
   } catch (error) {
