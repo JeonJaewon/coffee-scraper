@@ -21,6 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <title>다양한 커피 원두 검색 | 빈스토크</title>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link
