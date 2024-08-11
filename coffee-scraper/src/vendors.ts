@@ -53,3 +53,17 @@ export const hCoffeeRoasters: Vendor = {
     thumbnailSrcSelector: buildSelector('_25CKxIKjAk'),
   },
 }
+
+export const lowKeyCoffee: Vendor = {
+  vendorName: '로우키 커피',
+  url: buildVendorUrl('/lowkeycoffee/category/1f0142c3fcc34559ada637b364f915c2?cp=1'),
+  selectors: {
+    cardShapeSelector: buildCardShapeSelector('SQUARE'),
+    listSelector: buildSelector(['_3ba8S41U2S', 'tCv2enlAmw']),
+    priceSelector: buildSelector('_3XLnd6iWP5'),
+    titleSelector: buildSelector('_16P0LCXnI1'),
+    thumbnailSrcSelector: buildSelector('_25CKxIKjAk'),
+  },
+}
+
+export const VENDORS = [realBean, beanBrothers, hCoffeeRoasters, lowKeyCoffee]

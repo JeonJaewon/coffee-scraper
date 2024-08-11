@@ -3,7 +3,7 @@ import puppeteer, { ElementHandle } from 'puppeteer'
 import { SMART_STORE_URL } from './constants'
 import { db } from './firebase'
 import { CoffeeItem, CreatedAtTimestamp, VendorSnapshots } from './types'
-import { Vendor, beanBrothers, hCoffeeRoasters, realBean } from './vendors'
+import { VENDORS, Vendor } from './vendors'
 
 const createdAt = new Date().getTime()
 
@@ -71,8 +71,7 @@ const writeCreatedAtTimestamp = async (createdAt: number) => {
 }
 
 try {
-  const vendors = [hCoffeeRoasters, realBean, beanBrothers]
-  await Promise.all([writeCreatedAtTimestamp(createdAt), writeScrapedVendors(vendors)])
+  await Promise.all([writeCreatedAtTimestamp(createdAt), writeScrapedVendors(VENDORS)])
   console.log('All scraping done')
   process.exit(0)
 } catch (error) {
