@@ -7,7 +7,7 @@ import { useFilterCoffeeItems } from './policy'
 import { FilterBox } from './Filter/FilterBox'
 import { StatusBox } from './StatusBox'
 
-export const CoffeeGrid = () => {
+export default function CoffeeGrid() {
   const {
     data: { coffeeItems, createdAt },
   } = useCoffeeItemsQuery()

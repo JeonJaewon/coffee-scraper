@@ -1,6 +1,5 @@
 import { GetCoffeeItemsResponse } from '@/app/api/getCoffeeItems/route'
-import { useQuery, useSuspenseQuery } from '@tanstack/react-query'
-import { CoffeeItem } from 'coffee-scraper'
+import { useSuspenseQuery } from '@tanstack/react-query'
 
 // TODO Refactor react-query
 export const useCoffeeItemsQuery = () => {
