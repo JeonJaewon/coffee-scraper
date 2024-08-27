@@ -43,10 +43,10 @@ const scrapeCoffeeItems = async ({ vendorName, url, selectors }: Vendor): Promis
 
 const writeScrapedVendors = async (vendors: Vendor[]) => {
   const vendorSnapshots = { createdAt, items: {} } as VendorSnapshots
-  vendors.map(async (vendor) => {
+  for (const vendor of vendors) {
     const coffeeItems = await scrapeCoffeeItems(vendor)
     vendorSnapshots.items[vendor.vendorName] = coffeeItems
-  })
+  }
 
   try {
     const id = new Date(createdAt).toISOString()
@@ -68,11 +68,15 @@ const writeCreatedAtTimestamp = async (createdAt: number) => {
   }
 }
 
-try {
-  await Promise.all([writeCreatedAtTimestamp(createdAt), writeScrapedVendors(VENDORS)])
-  console.log('All scraping done')
-  process.exit(0)
-} catch (error) {
-  console.error(error)
-  process.exit(1)
+const main = async () => {
+  try {
+    await Promise.all([writeCreatedAtTimestamp(createdAt), writeScrapedVendors(VENDORS)])
+    console.log('All scraping done')
+    process.exit(0)
+  } catch (error) {
+    console.error(error)
+    process.exit(1)
+  }
 }
+
+main()
