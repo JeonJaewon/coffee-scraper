@@ -5,6 +5,7 @@
   "description": "",
   "main": "src/index.ts",
   "scripts": {
+    "build": "esbuild ./src/scrape.ts --bundle --minify --sourcemap --platform=node --target=es2020 --outfile=dist/index.js",
     "scrape": "bun run ./src/scrape.ts"
   },
   "keywords": [],
@@ -15,5 +16,7 @@
     "puppeteer": "^22.10.0",
     "uuid": "^10.0.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "esbuild": "^0.23.1"
+  }
 }
